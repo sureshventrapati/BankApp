@@ -6,31 +6,29 @@ namespace BankApp.CLI
 
     class Program
     {
+
+        private static string bankName = "MoneyBank";
         static void Main(string[] args)
         {
             bool exit = false;
 
             BankService bankService = new BankService();
-            bankService.AddBank("Money");
+            bankService.AddBank(bankName);
 
             while (!exit)
             {
                 Console.Clear();
-                Console.WriteLine("Choose an option...");
-                Console.WriteLine("1) Create Account");
-                Console.WriteLine("2) Deposit Amount");
-                Console.WriteLine("3) Login");
-                Console.WriteLine("4) EXIT");
-                Console.Write("\n\nEnter your choice: ");
+                Console.WriteLine(StandardMessage.WelcomeMenu());
+                
 
                 MainChoice mainChoice = (MainChoice)Enum.Parse(typeof(MainChoice),Console.ReadLine());
                 switch (mainChoice)
                 {
                     case MainChoice.CreateAccount:
                         Console.Clear();
-                        Console.Write("Enter your name: ");
+                        Console.WriteLine(StandardMessage.AskName());
                         string NAME_CREATEACCOUNT = Console.ReadLine();
-                        Console.Write("Enter a Password: ");
+                        Console.WriteLine(StandardMessage.AskPassword());
                         string PASS_CREATEACCOUNT = Console.ReadLine();
                         int ID_CREATEACCOUNT = bankService.CreateAccount(NAME_CREATEACCOUNT,PASS_CREATEACCOUNT);
                         Console.Clear();
@@ -39,20 +37,29 @@ namespace BankApp.CLI
                         break;
                     case MainChoice.Deposit:
                         Console.Clear();
-                        Console.Write("Enter the AccountID to deposit: ");
+                        Console.WriteLine(StandardMessage.AskID());
                         int ID_DEPOSIT = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter the amount to be deposited: ");
+                        Console.WriteLine(StandardMessage.AskDepositAmount());
+                        
                         int amount = Convert.ToInt32(Console.ReadLine());
-                        string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT,amount);
-                        Console.Clear();
-                        Console.WriteLine($"{amount}₹ have been deposited into {NAME_DEPOSIT} Account");
-                        Console.ReadLine();
-                        break;
+                        try
+                        {
+                            string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT, amount);
+                            Console.Clear();
+                            Console.WriteLine($"{amount}₹ have been deposited into {NAME_DEPOSIT} Account");
+                            Console.ReadLine();
+                            break;
+                        }
+                        catch
+                        {
+                            Console.WriteLine(StandardMessage.InvalidAccountID());
+                            break;
+                        }
                     case MainChoice.Login:
                         Console.Clear();
-                        Console.Write("Enter your ID: ");
+                        Console.Write(StandardMessage.AskID());
                         int ID_LOGIN = Convert.ToInt32(Console.ReadLine());
-                        Console.Write("Enter your Password: ");
+                        Console.Write(StandardMessage.AskPassword());
                         string PASS_LOGIN = Console.ReadLine();
                         Console.Clear();
                         if(bankService.Authenticate(ID_LOGIN, PASS_LOGIN))
@@ -65,30 +72,28 @@ namespace BankApp.CLI
                                 int balance = bankService.getBalance(ID_LOGIN);
                                 Console.WriteLine($"Welcome {NAME_LOGIN}"); 
                                 Console.WriteLine($"Your account balance is {balance}₹");
-                                Console.WriteLine("\n\n1) Transfer Money");
-                                Console.WriteLine("2) Logout");
 
-                                Console.Write("Choose an option: ");
+                                Console.WriteLine(StandardMessage.LoginMenu());
 
                                 LoginChoice loginChoice = (LoginChoice)Enum.Parse(typeof(LoginChoice), Console.ReadLine());
 
                                 switch (loginChoice)
                                 {
                                     case LoginChoice.TransferMoney:
-                                        Console.Write("Enter the ID of the account to whome u want to transfer ammount: ");
+                                        Console.Write(StandardMessage.TransferAskID());
                                         int ID_TO = Convert.ToInt32(Console.ReadLine());
-                                        Console.Write("Enter the amount to be transfered: ");
+                                        Console.Write(StandardMessage.AskTransferAmount());
                                         int AMOUNT_TRANSFER = Convert.ToInt32(Console.ReadLine());
                                         Console.Clear();
                                         if(bankService.TransferAmount(ID_LOGIN, ID_TO, AMOUNT_TRANSFER))
                                         {
-                                            Console.WriteLine("Transaction sucessfully completed !!!");
+                                            Console.WriteLine(StandardMessage.TransactionSuccess());
                                             Console.ReadLine();
 
                                         }
                                         else
                                         {
-                                            Console.WriteLine("Unable to complete transaction as there is insufficient balance.");
+                                            Console.WriteLine(StandardMessage.TransactionErrorInsufficientBal());
                                             Console.ReadLine();
                                         }
                                         break;
@@ -100,7 +105,7 @@ namespace BankApp.CLI
                         }
                         else
                         {
-                            Console.WriteLine("Wrong ID or Password...");
+                            Console.WriteLine(StandardMessage.InvalidCredentials());
                             Console.ReadLine();
                         }
                         break;
