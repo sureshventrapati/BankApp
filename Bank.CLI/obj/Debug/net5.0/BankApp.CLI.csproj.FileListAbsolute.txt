@@ -14,8 +14,8 @@ C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.C
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.AssemblyInfoInputs.cache
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.AssemblyInfo.cs
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.csproj.CoreCompileInputs.cache
-C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.csproj.CopyComplete
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\ref\BankApp.CLI.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.pdb
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.genruntimeconfig.cache
+C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.csproj.CopyComplete

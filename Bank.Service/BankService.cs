@@ -34,7 +34,24 @@ namespace BankApp.Service
         {
             Account acc = accounts[ID-1];
             acc.balance = acc.balance + Amount;
+            Transaction tr = new Transaction(ID, Amount, "Deposit", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            acc.setTransaction(tr);
             return acc.Name;
+        }
+
+        public string WithdrawAmount(int ID, int Amount)
+        {
+            Account acc = accounts[ID - 1];
+            int bal = acc.balance;
+            if (bal < Amount)
+            {
+                return "Failed";
+            }
+
+            acc.balance = bal - Amount;
+            Transaction tr = new Transaction(ID, Amount, "Withdraw", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            acc.setTransaction(tr);
+            return "";
         }
 
         public bool Authenticate(int ID,string pass)
@@ -67,10 +84,28 @@ namespace BankApp.Service
                 return false;
             }
 
+            Transaction tr = new Transaction(acc_from.ID,acc_to.ID,amount,"Transfer",DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            acc_from.setTransaction(tr);
+            Transaction trr = new Transaction(acc_from.ID, acc_to.ID, amount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            acc_to.setTransaction(trr);
+
             acc_from.balance -= amount;
             acc_to.balance += amount;
 
             return true;
         }
+
+        public string GetTransactions(int ID)
+        {
+            string finaltransactions="";
+            Account acc = accounts[ID - 1];
+            List<Transaction> transactions = acc.getTransactions();
+            foreach(Transaction transaction in transactions)
+            {
+                finaltransactions += transaction.rID+" "+transaction.desc+" "+transaction.amount+" "+transaction.time+"\n";
+            }
+            return finaltransactions;
+        }
+
     }
 }

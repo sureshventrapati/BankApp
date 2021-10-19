@@ -33,6 +33,11 @@ namespace BankApp.CLI
             return "Enter the amount to be deposited: ";
         }
 
+        public static string AskWithdrawAmount()
+        {
+            return "Enter the amount to withdraw: ";
+        }
+
         public static string InvalidAccountID()
         {
             return "Invlid Account ID !!!";
@@ -40,7 +45,7 @@ namespace BankApp.CLI
 
         public static string LoginMenu()
         {
-            return "\n\n1) Transfer Money\n2) Logout\n\nChoose an option:";
+            return "\n\n1) Transfer Money\n2) Withdraw Money\n3) Show Transactions\n4) Logout\n\nChoose an option:";
         }
 
         public static string InvalidCredentials()
@@ -66,6 +71,21 @@ namespace BankApp.CLI
         public static string TransactionErrorInsufficientBal()
         {
             return "Unable to complete transaction as there is insufficient balance.";
+        }
+
+        public static string InsuffiecientFunds()
+        {
+            return "Insufficient Funds.....";
+        }
+
+        public static string WithdrawError()
+        {
+            return "An error occured while withdrawing...";
+        }
+
+        public static string TransactionFetchingError()
+        {
+            return "An error occured while fetching Transactions...";
         }
     }
 }

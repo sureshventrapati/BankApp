@@ -9,7 +9,6 @@ C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankA
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.AssemblyInfoInputs.cache
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.AssemblyInfo.cs
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.csproj.CoreCompileInputs.cache
-C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.csproj.CopyComplete
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\ref\BankApp.Service.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.pdb

@@ -18,6 +18,7 @@ namespace BankApp.Model
 
     public class Account
     {
+        public List<Transaction> transactions = new List<Transaction>();
         public int balance { get; set; }
         public int ID { get; set; }
         public string Name { get; set; }
@@ -29,5 +30,18 @@ namespace BankApp.Model
             this.Name = Name;
             this.balance = 0;
         }
+
+        public List<Transaction> getTransactions()
+        {
+            return transactions;
+        }
+
+        public bool setTransaction(Transaction t)
+        {
+            transactions.Add(t);
+            return true;
+        }
     }
+
+    
 }
