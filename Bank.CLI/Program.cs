@@ -128,7 +128,7 @@ namespace BankApp.CLI
                                         try
                                         {
                                             Console.Clear();
-                                            Console.Write(bankService.GetTransactions(ID_LOGIN) + "Press Enter to exit...");
+                                            Console.Write(bankService.GetTransactions(ID_LOGIN) + "\nPress Enter to exit...");
                                             Console.ReadLine();
 
                                         }
