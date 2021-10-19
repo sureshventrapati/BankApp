@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BankApp.Model;
+using ConsoleTables;
 
 namespace BankApp.Service
 {
     public class BankService
     {
-        private List<Bank> banks = new List<Bank>();
+        //private List<Bank> banks = new List<Bank>();
+        private Dictionary<string, Bank> banks = new Dictionary<string, Bank>();
         //private List<Account> accounts = new List<Account>();
         private Dictionary<string, Account> Accounts = new Dictionary<string, Account>();
         //private int accountNumberCounter=0;
@@ -18,7 +20,7 @@ namespace BankApp.Service
         public bool AddBank(string Name)
         {
             Bank bank = new Bank(Name);
-            this.banks.Add(bank);
+            this.banks.Add(bank.ID,bank);
             return true;
         }
 
@@ -27,6 +29,7 @@ namespace BankApp.Service
             //this.accountNumberCounter += 1;
             Account acc = new Account(Name);
             acc.Passowrd = pass;
+            acc.bankID = "Mon19102021";
             //accounts.Add(acc);
             string AccountID = acc.AccountID;
             Accounts.Add(AccountID,acc);
@@ -38,7 +41,8 @@ namespace BankApp.Service
             Account acc = Accounts[AccountID];
             //Account acc = accounts[ID-1];
             acc.balance = acc.balance + Amount;
-            Transaction tr = new Transaction(AccountID, Amount, "Deposit", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            string TID = acc.bankID + acc.AccountID + DateTime.Now.ToString("ddMMyyyy");
+            Transaction tr = new Transaction(TID, AccountID, Amount, "Deposit", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             acc.setTransaction(tr);
             return acc.Name;
         }
@@ -54,7 +58,8 @@ namespace BankApp.Service
             }
 
             acc.balance = bal - Amount;
-            Transaction tr = new Transaction(AccountID, Amount, "Withdraw", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            string TID = acc.bankID + acc.AccountID + DateTime.Now.ToString("ddMMyyyy");
+            Transaction tr = new Transaction(TID, AccountID, Amount, "Withdraw", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             acc.setTransaction(tr);
             return "";
         }
@@ -103,17 +108,19 @@ namespace BankApp.Service
             return true;
         }
 
-        public string GetTransactions(string AccountID)
+        public ConsoleTable GetTransactions(string AccountID)
         {
-            string finaltransactions="";
+            //string finaltransactions="";
             Account acc = Accounts[AccountID];
             //Account acc = accounts[ID - 1];
             List<Transaction> transactions = acc.getTransactions();
+            ConsoleTable table = new ConsoleTable(new ConsoleTableOptions { Columns = new[] { "TransactionID", "SendersAccountID", "RecieversAccountID", "Type", "Amount", "Time" }, EnableCount = false });
             foreach(Transaction transaction in transactions)
             {
-                finaltransactions += transaction.rID+" "+transaction.desc+" "+transaction.amount+" "+transaction.time+"\n";
+                //finaltransactions += transaction.TransactionID + " " + transaction.rID + " " + transaction.desc + " " + transaction.amount + " " + transaction.time + "\n";
+                table.AddRow(transaction.TransactionID, transaction.sID, transaction.rID, transaction.desc, transaction.amount, transaction.time);
             }
-            return finaltransactions;
+            return table;
         }
 
     }

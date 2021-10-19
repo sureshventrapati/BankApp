@@ -10,6 +10,8 @@ namespace BankApp.Model
     {
         public List<Transaction> transactions = new List<Transaction>();
 
+        public string bankID { get; set; }
+
         public string AccountID { get; set; }
         public int balance { get; set; }
         //public int ID { get; set; }

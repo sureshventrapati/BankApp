@@ -8,11 +8,12 @@ namespace BankApp.Model
 {
     public class Bank
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
         public Bank(string bankName)
         {
             this.Name = bankName;
+            this.ID = bankName.Substring(0, 3) + DateTime.Now.ToString("ddMMyyyy");
         }
     }
 }

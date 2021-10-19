@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BankApp.Service;
+using ConsoleTables;
 
 namespace BankApp.CLI
 {
@@ -128,14 +129,16 @@ namespace BankApp.CLI
                                         try
                                         {
                                             Console.Clear();
-                                            Console.Write(bankService.GetTransactions(ID_LOGIN) + "\nPress Enter to exit...");
+                                            ConsoleTable t = bankService.GetTransactions(ID_LOGIN);
+                                            t.Write();
+                                            Console.Write("\nPress Enter to exit...");
                                             Console.ReadLine();
 
                                         }
-                                        catch
+                                        catch(Exception ee)
                                         {
                                             Console.Clear();
-                                            Console.WriteLine(StandardMessage.TransactionFetchingError());
+                                            Console.WriteLine(StandardMessage.TransactionFetchingError()+ee.ToString());
                                             Console.ReadLine();
                                         }
                                         break;
