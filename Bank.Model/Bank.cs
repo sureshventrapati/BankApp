@@ -19,14 +19,17 @@ namespace BankApp.Model
     public class Account
     {
         public List<Transaction> transactions = new List<Transaction>();
+
+        public string AccountID { get; set; }
         public int balance { get; set; }
-        public int ID { get; set; }
+        //public int ID { get; set; }
         public string Name { get; set; }
         public string Passowrd { get; set; }
 
-        public Account(int ID,string Name)
+        public Account(string Name)
         {
-            this.ID = ID;
+            this.AccountID = Name.Substring(0,3)+DateTime.Now.ToString("ddMMyyyyHHmmss");
+            //this.ID = ID;
             this.Name = Name;
             this.balance = 0;
         }

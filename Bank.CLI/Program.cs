@@ -31,7 +31,7 @@ namespace BankApp.CLI
                         string NAME_CREATEACCOUNT = Console.ReadLine();
                         Console.Write(StandardMessage.AskPassword());
                         string PASS_CREATEACCOUNT = Console.ReadLine();
-                        int ID_CREATEACCOUNT = bankService.CreateAccount(NAME_CREATEACCOUNT,PASS_CREATEACCOUNT);
+                        string ID_CREATEACCOUNT = bankService.CreateAccount(NAME_CREATEACCOUNT,PASS_CREATEACCOUNT);
                         Console.Clear();
                         Console.WriteLine($"Bank account created with account ID: {ID_CREATEACCOUNT}");
                         Console.ReadLine();
@@ -39,7 +39,7 @@ namespace BankApp.CLI
                     case MainChoice.Deposit:
                         Console.Clear();
                         Console.Write(StandardMessage.AskID());
-                        int ID_DEPOSIT = Convert.ToInt32(Console.ReadLine());
+                        string ID_DEPOSIT = Console.ReadLine();
                         Console.Write(StandardMessage.AskDepositAmount());
                         
                         int amount = Convert.ToInt32(Console.ReadLine());
@@ -59,7 +59,7 @@ namespace BankApp.CLI
                     case MainChoice.Login:
                         Console.Clear();
                         Console.Write(StandardMessage.AskID());
-                        int ID_LOGIN = Convert.ToInt32(Console.ReadLine());
+                        string ID_LOGIN = Console.ReadLine();
                         Console.Write(StandardMessage.AskPassword());
                         string PASS_LOGIN = Console.ReadLine();
                         Console.Clear();
@@ -82,7 +82,7 @@ namespace BankApp.CLI
                                 {
                                     case LoginChoice.TransferMoney:
                                         Console.Write(StandardMessage.TransferAskID());
-                                        int ID_TO = Convert.ToInt32(Console.ReadLine());
+                                        string ID_TO = Console.ReadLine();
                                         Console.Write(StandardMessage.AskTransferAmount());
                                         int AMOUNT_TRANSFER = Convert.ToInt32(Console.ReadLine());
                                         Console.Clear();

@@ -8,11 +8,11 @@ namespace BankApp.Model
 {
     public class Transaction
     {
-        public int sID, rID;
+        public string sID, rID;
         public double amount;
         public string desc, time;
 
-        public Transaction(int sID, int rID, double amount, string desc, string time)
+        public Transaction(string sID, string rID, double amount, string desc, string time)
         {
             this.sID = sID;
             this.rID = rID;
@@ -20,7 +20,7 @@ namespace BankApp.Model
             this.desc = desc;
             this.time = time;
         }
-        public Transaction(int rID, double amount, string desc, string time)
+        public Transaction(string rID, double amount, string desc, string time)
         {
             this.rID = rID;
             this.amount = amount;
