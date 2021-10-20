@@ -14,8 +14,11 @@ namespace BankApp.CLI
         {
             bool exit = false;
 
+            Choices choice = new Choices();
+
             BankService bankService = new BankService();
-            bankService.AddBank(bankName);
+            bankService.AddBank(bankName, 0, 5, 2, 6);
+            bankService.CreateStaffAccount("admin", "admin");
 
             while (!exit)
             {
@@ -23,29 +26,18 @@ namespace BankApp.CLI
                 Console.Write(StandardMessage.WelcomeMenu());
                 
 
-                MainChoice mainChoice = (MainChoice)Enum.Parse(typeof(MainChoice),Console.ReadLine());
+                Choices.MainChoice mainChoice = (Choices.MainChoice)Enum.Parse(typeof(Choices.MainChoice),Console.ReadLine());
                 switch (mainChoice)
                 {
-                    case MainChoice.CreateAccount:
-                        Console.Clear();
-                        Console.Write(StandardMessage.AskName());
-                        string NAME_CREATEACCOUNT = Console.ReadLine();
-                        Console.Write(StandardMessage.AskPassword());
-                        string PASS_CREATEACCOUNT = Console.ReadLine();
-                        string ID_CREATEACCOUNT = bankService.CreateAccount(NAME_CREATEACCOUNT,PASS_CREATEACCOUNT);
-                        Console.Clear();
-                        Console.WriteLine($"Bank account created with account ID: {ID_CREATEACCOUNT}");
-                        Console.ReadLine();
-                        break;
-                    case MainChoice.Deposit:
+                    case Choices.MainChoice.Deposit:
                         Console.Clear();
                         Console.Write(StandardMessage.AskID());
                         string ID_DEPOSIT = Console.ReadLine();
                         Console.Write(StandardMessage.AskDepositAmount());
                         
-                        int amount = Convert.ToInt32(Console.ReadLine());
                         try
                         {
+                            int amount = Convert.ToInt32(Console.ReadLine());
                             string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT, amount);
                             Console.Clear();
                             Console.WriteLine($"{amount}₹ have been deposited into {NAME_DEPOSIT} Account");
@@ -57,125 +49,179 @@ namespace BankApp.CLI
                             Console.Write(StandardMessage.InvalidAccountID());
                             break;
                         }
-                    case MainChoice.Login:
+                    case Choices.MainChoice.Login:
                         Console.Clear();
-                        Console.Write(StandardMessage.AskID());
-                        string ID_LOGIN = Console.ReadLine();
-                        Console.Write(StandardMessage.AskPassword());
-                        string PASS_LOGIN = Console.ReadLine();
-                        Console.Clear();
-                        if(bankService.Authenticate(ID_LOGIN, PASS_LOGIN))
+                        string ID_LOGIN, PASS_LOGIN;
+                        try
                         {
-                            bool e = false;
-                            while (!e)
+                            
+                            Console.WriteLine("1) Bankstaff Login\n2) Customer Login");
+                            int option = Convert.ToInt32(Console.ReadLine());
+                            if (option == 1)
                             {
+                                Console.Write(StandardMessage.AskID());
+                                ID_LOGIN = Console.ReadLine();
+                                Console.Write(StandardMessage.AskPassword());
+                                PASS_LOGIN = Console.ReadLine();
                                 Console.Clear();
-                                string NAME_LOGIN = bankService.getName(ID_LOGIN);
-                                int balance = bankService.getBalance(ID_LOGIN);
-                                Console.WriteLine($"Welcome {NAME_LOGIN}"); 
-                                Console.WriteLine($"Your account balance is {balance}₹");
-
-                                Console.Write(StandardMessage.LoginMenu());
-
-                                LoginChoice loginChoice = (LoginChoice)Enum.Parse(typeof(LoginChoice), Console.ReadLine());
-
-                                switch (loginChoice)
+                                if(bankService.AuthenticateStaff(ID_LOGIN, PASS_LOGIN))
                                 {
-                                    case LoginChoice.TransferMoney:
-                                        Console.Write(StandardMessage.TransferAskID());
-                                        string ID_TO = Console.ReadLine();
-                                        Console.Write(StandardMessage.AskTransferAmount());
-                                        int AMOUNT_TRANSFER = Convert.ToInt32(Console.ReadLine());
+                                    bool e = false;
+                                    while (!e)
+                                    {
+                                        Console.Write(StandardMessage.StaffLoginChoice());
+                                        Choices.StaffLoginChoice staffLoginChoice = (Choices.StaffLoginChoice)Enum.Parse(typeof(Choices.StaffLoginChoice), Console.ReadLine());
+                                        switch (staffLoginChoice)
+                                        {
+                                            case Choices.StaffLoginChoice.CreateAccount:
+                                                Console.Clear();
+                                                Console.Write(StandardMessage.AskName());
+                                                string NAME_CREATEACCOUNT = Console.ReadLine();
+                                                Console.Write(StandardMessage.AskPassword());
+                                                string PASS_CREATEACCOUNT = Console.ReadLine();
+                                                string ID_CREATEACCOUNT = bankService.CreateCustomerAccount(NAME_CREATEACCOUNT, PASS_CREATEACCOUNT);
+                                                Console.Clear();
+                                                Console.WriteLine($"Bank account created with:\nAccount ID: {ID_CREATEACCOUNT}\nPassword:{PASS_CREATEACCOUNT}");
+                                                Console.ReadLine();
+                                                break;
+
+                                            case Choices.StaffLoginChoice.UpdateAccount:
+                                                break;
+                                            case Choices.StaffLoginChoice.DeleteAccount:
+                                                break;
+                                            case Choices.StaffLoginChoice.AddCurrency:
+                                                break;
+                                            case Choices.StaffLoginChoice.UpdatesRTGS:
+                                                break;
+                                            case Choices.StaffLoginChoice.UpdatesIMPS:
+                                                break;
+                                            case Choices.StaffLoginChoice.UpdateoRTGS:
+                                                break;
+                                            case Choices.StaffLoginChoice.UpdateoIMPS:
+                                                break;
+                                            case Choices.StaffLoginChoice.Logout:
+                                                e = true;
+                                                break;
+                                        }
+                                    }
+
+                                    
+                                }
+                                
+                            }
+                            else
+                            {
+                                Console.Write(StandardMessage.AskID());
+                                ID_LOGIN = Console.ReadLine();
+                                Console.Write(StandardMessage.AskPassword());
+                                PASS_LOGIN = Console.ReadLine();
+                                Console.Clear();
+
+                                if (bankService.AuthenticateCustomer(ID_LOGIN, PASS_LOGIN))
+                                {
+                                    bool e = false;
+                                    while (!e)
+                                    {
                                         Console.Clear();
-                                        if(bankService.TransferAmount(ID_LOGIN, ID_TO, AMOUNT_TRANSFER))
-                                        {
-                                            Console.Write(StandardMessage.TransactionSuccess());
-                                            Console.ReadLine();
+                                        string NAME_LOGIN = bankService.getName(ID_LOGIN);
+                                        int balance = bankService.getBalance(ID_LOGIN);
+                                        Console.WriteLine($"Welcome {NAME_LOGIN}");
+                                        Console.WriteLine($"Your account balance is {balance}₹");
 
-                                        }
-                                        else
-                                        {
-                                            Console.Write(StandardMessage.TransactionErrorInsufficientBal());
-                                            Console.ReadLine();
-                                        }
-                                        break;
-                                    case LoginChoice.Withdraw:
-                                        Console.Write(StandardMessage.AskWithdrawAmount());
-                                        int a = Convert.ToInt32(Console.ReadLine());
-                                        try
-                                        {
-                                            string check = bankService.WithdrawAmount(ID_LOGIN, a);
-                                            if (check == "Failed")
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine(StandardMessage.InsuffiecientFunds());
-                                                Console.ReadLine();
-                                            }
-                                            else
-                                            {
-                                                Console.Clear();
-                                                Console.WriteLine($"{a} has been withdrawed succesfully");
-                                                Console.ReadLine();
-                                            }
-                                        }
-                                        catch
-                                        {
-                                            Console.Clear();
-                                            Console.WriteLine(StandardMessage.WithdrawError());
-                                            Console.ReadLine();
-                                        }
-                                        break;
-                                    case LoginChoice.ShowTransactions:
-                                        try
-                                        {
-                                            Console.Clear();
-                                            ConsoleTable t = bankService.GetTransactions(ID_LOGIN);
-                                            t.Write();
-                                            Console.Write("\nPress Enter to exit...");
-                                            Console.ReadLine();
+                                        Console.Write(StandardMessage.LoginMenu());
 
-                                        }
-                                        catch(Exception ee)
+                                        Choices.CustomerLoginChoice loginChoice = (Choices.CustomerLoginChoice)Enum.Parse(typeof(Choices.CustomerLoginChoice), Console.ReadLine());
+
+                                        switch (loginChoice)
                                         {
-                                            Console.Clear();
-                                            Console.WriteLine(StandardMessage.TransactionFetchingError()+ee.ToString());
-                                            Console.ReadLine();
+                                            case Choices.CustomerLoginChoice.TransferMoney:
+                                                Console.Write(StandardMessage.TransferAskID());
+                                                string ID_TO = Console.ReadLine();
+                                                Console.Write(StandardMessage.AskTransferAmount());
+                                                int AMOUNT_TRANSFER = Convert.ToInt32(Console.ReadLine());
+                                                Console.Clear();
+                                                if (bankService.TransferAmount(ID_LOGIN, ID_TO, AMOUNT_TRANSFER))
+                                                {
+                                                    Console.Write(StandardMessage.TransactionSuccess());
+                                                    Console.ReadLine();
+
+                                                }
+                                                else
+                                                {
+                                                    Console.Write(StandardMessage.TransactionErrorInsufficientBal());
+                                                    Console.ReadLine();
+                                                }
+                                                break;
+                                            case Choices.CustomerLoginChoice.Withdraw:
+                                                Console.Write(StandardMessage.AskWithdrawAmount());
+                                                int a = Convert.ToInt32(Console.ReadLine());
+                                                try
+                                                {
+                                                    string check = bankService.WithdrawAmount(ID_LOGIN, a);
+                                                    if (check == "Failed")
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine(StandardMessage.InsuffiecientFunds());
+                                                        Console.ReadLine();
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.Clear();
+                                                        Console.WriteLine($"{a} has been withdrawed succesfully");
+                                                        Console.ReadLine();
+                                                    }
+                                                }
+                                                catch
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine(StandardMessage.WithdrawError());
+                                                    Console.ReadLine();
+                                                }
+                                                break;
+                                            case Choices.CustomerLoginChoice.ShowTransactions:
+                                                try
+                                                {
+                                                    Console.Clear();
+                                                    ConsoleTable t = bankService.GetTransactions(ID_LOGIN);
+                                                    t.Write();
+                                                    Console.Write("\nPress Enter to exit...");
+                                                    Console.ReadLine();
+
+                                                }
+                                                catch (Exception ee)
+                                                {
+                                                    Console.Clear();
+                                                    Console.WriteLine(StandardMessage.TransactionFetchingError() + ee.ToString());
+                                                    Console.ReadLine();
+                                                }
+                                                break;
+                                            case Choices.CustomerLoginChoice.Logout:
+                                                e = true;
+                                                break;
                                         }
-                                        break;
-                                    case LoginChoice.Logout:
-                                        e = true;
-                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.Write(StandardMessage.InvalidCredentials());
+                                    Console.ReadLine();
                                 }
                             }
+                            
                         }
-                        else
+                        catch
                         {
-                            Console.Write(StandardMessage.InvalidCredentials());
-                            Console.ReadLine();
+                            Console.WriteLine("Enter a valid ID or Password");
                         }
                         break;
-                    case MainChoice.EXIT:
+                    case Choices.MainChoice.EXIT:
                         exit = true;
                         break;
                 }
             }
         }
 
-        public enum MainChoice
-        {
-            CreateAccount=1,
-            Deposit,
-            Login,
-            EXIT,
-        }
-
-        public enum LoginChoice
-        {
-            TransferMoney=1,
-            Withdraw,
-            ShowTransactions,
-            Logout,
-        }
+        
 
     }
 }

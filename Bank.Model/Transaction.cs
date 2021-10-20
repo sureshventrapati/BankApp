@@ -8,10 +8,12 @@ namespace BankApp.Model
 {
     public class Transaction
     {
-        public string TransactionID;
-        public string sID, rID;
-        public double amount;
-        public string desc, time;
+        public string TransactionID { get; set; }
+        public string sID { get; set; }
+        public string rID { get; set; }
+        public double amount { get; set; }
+        public string desc { get; set; }
+        public string time { get; set; }
 
         public Transaction(string TID,string sID, string rID, double amount, string desc, string time)
         {

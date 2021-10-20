@@ -10,7 +10,12 @@ namespace BankApp.CLI
     {
         public static string WelcomeMenu()
         {
-            return "Choose an option...\n1) Create Account\n2) Deposit Amount\n3) Login\n4) EXIT\n\nEnter your choice: ";
+            return "Choose an option...\n1) Deposit Amount\n2) Login\n3) EXIT\n\nEnter your choice: ";
+        }
+
+        public static string StaffLoginChoice()
+        {
+            return "Choose an action...\n1) CreateAccount\n2) UpdateAccount\n3) DeleteAccoun\n4) AddCurrency\n5) UpdatesRTGS\n6) UpdatesIMPS\n7) UpdateoRTGS\n8) UpdateoIMPS\n9) ViewAccountTransaction\n10) RevertTransaction\n11) Logout\n\nEnter your choice: ";
         }
 
         public static string AskName()
@@ -45,7 +50,7 @@ namespace BankApp.CLI
 
         public static string LoginMenu()
         {
-            return "\n\n1) Transfer Money\n2) Withdraw Money\n3) Show Transactions\n4) Logout\n\nChoose an option:";
+            return "\n\n1) Transfer Money (INR only)\n2) Withdraw Money (INR only)\n3) Show Transactions\n4) Logout\n\nChoose an option:";
         }
 
         public static string InvalidCredentials()

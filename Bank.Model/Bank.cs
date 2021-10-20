@@ -10,10 +10,25 @@ namespace BankApp.Model
     {
         public string ID { get; set; }
         public string Name { get; set; }
-        public Bank(string bankName)
+
+        public int sRTGSCharge { get; set; }
+
+        public int sIMPSCharge { get; set; }
+
+        public int oRTGSCharge { get; set; }
+
+        public int oIMPSCharge { get; set; }
+
+
+        public Bank(string bankName,int sRTGS, int sIMPS, int oRTGS, int oIMPS)
         {
             this.Name = bankName;
             this.ID = bankName.Substring(0, 3) + DateTime.Now.ToString("ddMMyyyy");
+            this.sRTGSCharge = sRTGS;
+            this.sIMPSCharge = sIMPS;
+            this.oRTGSCharge = oRTGS;
+            this.oIMPSCharge = oIMPS;
+
         }
     }
 }

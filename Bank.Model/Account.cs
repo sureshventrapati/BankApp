@@ -14,14 +14,12 @@ namespace BankApp.Model
 
         public string AccountID { get; set; }
         public int balance { get; set; }
-        //public int ID { get; set; }
         public string Name { get; set; }
         public string Passowrd { get; set; }
 
         public Account(string Name)
         {
             this.AccountID = Name.Substring(0, 3) + DateTime.Now.ToString("ddMMyyyyHHmmss");
-            //this.ID = ID;
             this.Name = Name;
             this.balance = 0;
         }
@@ -35,6 +33,22 @@ namespace BankApp.Model
         {
             transactions.Add(t);
             return true;
+        }
+    }
+
+    public class StaffAccount
+    {
+        public string AccountID { get; set; }
+
+        public string Name { get; set; }
+        
+        public string Passowrd { get; set; }
+
+        public StaffAccount(string AccountID, string Name, string Password)
+        {
+            this.AccountID = AccountID;
+            this.Name = Name;
+            this.Passowrd = Passowrd;
         }
     }
 }
