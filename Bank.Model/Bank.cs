@@ -30,5 +30,16 @@ namespace BankApp.Model
             this.oIMPSCharge = oIMPS;
 
         }
+
+        public Bank(string bankName)
+        {
+            this.Name = bankName;
+            this.ID = bankName.Substring(0, 3) + DateTime.Now.ToString("ddMMyyyy");
+            this.sRTGSCharge = 0;
+            this.sIMPSCharge = 5;
+            this.oRTGSCharge = 2;
+            this.oIMPSCharge = 6;
+
+        }
     }
 }

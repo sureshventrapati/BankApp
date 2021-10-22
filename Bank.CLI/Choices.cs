@@ -37,5 +37,12 @@ namespace BankApp.CLI
             RevertTransaction,
             Logout,
         }
+
+        public enum UpdateCustomerAccountChoice
+        {
+            UpdateName = 1,
+            UpdatePassword,
+            Back,
+        }
     }
 }

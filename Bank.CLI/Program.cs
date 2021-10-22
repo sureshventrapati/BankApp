@@ -17,14 +17,13 @@ namespace BankApp.CLI
             Choices choice = new Choices();
 
             BankService bankService = new BankService();
-            bankService.AddBank(bankName, 0, 5, 2, 6);
+            bankService.AddBank(bankName);
             bankService.CreateStaffAccount("admin", "admin");
 
             while (!exit)
             {
                 Console.Clear();
                 Console.Write(StandardMessage.WelcomeMenu());
-                
 
                 Choices.MainChoice mainChoice = (Choices.MainChoice)Enum.Parse(typeof(Choices.MainChoice),Console.ReadLine());
                 switch (mainChoice)
@@ -59,6 +58,7 @@ namespace BankApp.CLI
                             int option = Convert.ToInt32(Console.ReadLine());
                             if (option == 1)
                             {
+                                Console.Clear();
                                 Console.Write(StandardMessage.AskID());
                                 ID_LOGIN = Console.ReadLine();
                                 Console.Write(StandardMessage.AskPassword());
@@ -69,6 +69,7 @@ namespace BankApp.CLI
                                     bool e = false;
                                     while (!e)
                                     {
+                                        Console.Clear();
                                         Console.Write(StandardMessage.StaffLoginChoice());
                                         Choices.StaffLoginChoice staffLoginChoice = (Choices.StaffLoginChoice)Enum.Parse(typeof(Choices.StaffLoginChoice), Console.ReadLine());
                                         switch (staffLoginChoice)
@@ -86,8 +87,48 @@ namespace BankApp.CLI
                                                 break;
 
                                             case Choices.StaffLoginChoice.UpdateAccount:
+                                                Console.Clear();
+                                                Console.Write(StandardMessage.UpdateCustomerAccount());
+                                                Choices.UpdateCustomerAccountChoice updateCustomerAccountLoginChoice = (Choices.UpdateCustomerAccountChoice)Enum.Parse(typeof(Choices.UpdateCustomerAccountChoice), Console.ReadLine());
+                                                switch (updateCustomerAccountLoginChoice)
+                                                {
+                                                    case Choices.UpdateCustomerAccountChoice.UpdateName:
+                                                        Console.Clear();
+                                                        Console.Write(StandardMessage.AskID());
+                                                        string CustomerAccountID =  Console.ReadLine();
+                                                        Console.Write(StandardMessage.AskName());
+                                                        string NewName = Console.ReadLine();
+                                                        NewName = bankService.UpdateCustomerName(CustomerAccountID,NewName);
+                                                        Console.WriteLine($"Name has been updated to {NewName}");
+                                                        Console.ReadLine();
+                                                        break;
+                                                    case Choices.UpdateCustomerAccountChoice.UpdatePassword:
+                                                        Console.Clear();
+                                                        Console.Write(StandardMessage.AskID());
+                                                        string CustomerID = Console.ReadLine();
+                                                        Console.Write(StandardMessage.AskPassword());
+                                                        string NewPassword = Console.ReadLine();
+                                                        NewPassword = bankService.UpdateCustomerPassword(CustomerID, NewPassword);
+                                                        Console.Write($"Password has been updated to {NewPassword}");
+                                                        Console.ReadLine();
+                                                        break;
+                                                    case Choices.UpdateCustomerAccountChoice.Back:
+                                                        Console.Clear();
+                                                        break;
+                                                }
                                                 break;
-                                            case Choices.StaffLoginChoice.DeleteAccount:
+                                                case Choices.StaffLoginChoice.DeleteAccount:
+                                                    Console.Clear();
+                                                    Console.Write(StandardMessage.AskID());
+                                                    string CustomerAccID = Console.ReadLine();
+                                                    if (bankService.DeleteCustomerAccount(CustomerAccID))
+                                                    {
+                                                        Console.Write("Account Found and Deleted !!!");
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Account not found in records...");
+                                                    }
                                                 break;
                                             case Choices.StaffLoginChoice.AddCurrency:
                                                 break;
@@ -99,18 +140,32 @@ namespace BankApp.CLI
                                                 break;
                                             case Choices.StaffLoginChoice.UpdateoIMPS:
                                                 break;
+                                            case Choices.StaffLoginChoice.ViewAccountTransaction:
+                                                Console.Clear();
+                                                Console.Write(StandardMessage.AskID());
+                                                string ID = Console.ReadLine();
+                                                ConsoleTable ctable = bankService.GetTransactions(ID);
+                                                ctable.Write();
+                                                Console.Write("\nPress Enter to exit...");
+                                                Console.ReadLine();
+                                                break;
+                                            case Choices.StaffLoginChoice.RevertTransaction:
+                                                break;
                                             case Choices.StaffLoginChoice.Logout:
                                                 e = true;
                                                 break;
                                         }
                                     }
-
-                                    
                                 }
-                                
+                                else
+                                {
+                                    Console.WriteLine(StandardMessage.InvalidCredentials());
+                                    Console.ReadLine();
+                                }
                             }
                             else
                             {
+                                Console.Clear();
                                 Console.Write(StandardMessage.AskID());
                                 ID_LOGIN = Console.ReadLine();
                                 Console.Write(StandardMessage.AskPassword());
@@ -203,6 +258,7 @@ namespace BankApp.CLI
                                 }
                                 else
                                 {
+                                    Console.Clear();
                                     Console.Write(StandardMessage.InvalidCredentials());
                                     Console.ReadLine();
                                 }
@@ -211,6 +267,7 @@ namespace BankApp.CLI
                         }
                         catch
                         {
+                            Console.Clear();
                             Console.WriteLine("Enter a valid ID or Password");
                         }
                         break;

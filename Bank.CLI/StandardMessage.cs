@@ -15,17 +15,22 @@ namespace BankApp.CLI
 
         public static string StaffLoginChoice()
         {
-            return "Choose an action...\n1) CreateAccount\n2) UpdateAccount\n3) DeleteAccoun\n4) AddCurrency\n5) UpdatesRTGS\n6) UpdatesIMPS\n7) UpdateoRTGS\n8) UpdateoIMPS\n9) ViewAccountTransaction\n10) RevertTransaction\n11) Logout\n\nEnter your choice: ";
+            return "Choose an action...\n1) CreateAccount\n2) UpdateAccount\n3) DeleteAccount\n4) AddCurrency\n5) UpdatesRTGS\n6) UpdatesIMPS\n7) UpdateoRTGS\n8) UpdateoIMPS\n9) ViewAccountTransaction\n10) RevertTransaction\n11) Logout\n\nEnter your choice: ";
+        }
+
+        public static string UpdateCustomerAccount()
+        {
+            return "Choose an action...\n1) Update Name\n2) Update Password\n3) Back\n\nEnter your choice: ";
         }
 
         public static string AskName()
         {
-            return "Enter your name: ";
+            return "Enter name: ";
         }
 
         public static string AskPassword()
         {
-            return "Enter a Password: ";
+            return "Enter Password: ";
         }
 
         public static string AskID()

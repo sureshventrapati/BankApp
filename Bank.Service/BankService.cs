@@ -24,6 +24,13 @@ namespace BankApp.Service
             return true;
         }
 
+        public bool AddBank(string Name)
+        {
+            Bank bank = new Bank(Name);
+            this.banks.Add(bank.ID, bank);
+            return true;
+        }
+
         public string CreateCustomerAccount(string Name, string pass)
         {
             Account acc = new Account(Name);
@@ -89,6 +96,25 @@ namespace BankApp.Service
             return false;
         }
 
+        public string UpdateCustomerName(string AccountID,string NewName)
+        {
+            Account acc = customerAccounts[AccountID];
+            acc.Name = NewName;
+            return NewName;
+        }
+
+        public string UpdateCustomerPassword(string AccountID, string NewPassword)
+        {
+            Account acc = customerAccounts[AccountID];
+            acc.Passowrd = NewPassword;
+            return NewPassword;
+        }
+
+        public bool DeleteCustomerAccount(string AccountID)
+        {
+            return customerAccounts.Remove(AccountID);
+        }
+
         public string getName(string AccountID)
         {
             return customerAccounts[AccountID].Name;
@@ -133,6 +159,7 @@ namespace BankApp.Service
             }
             return table;
         }
+
 
     }
 }
