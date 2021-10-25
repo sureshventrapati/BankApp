@@ -19,3 +19,4 @@ C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\ref\BankA
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.pdb
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.genruntimeconfig.cache
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\bin\Debug\net5.0\ConsoleTables.dll
+C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.CLI\obj\Debug\net5.0\BankApp.CLI.csproj.CopyComplete

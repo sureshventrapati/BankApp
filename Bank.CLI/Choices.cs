@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace BankApp.CLI
 {
-    public class Choices
-    {
-        public enum MainChoice
+
+        public enum MainMenu //Menus
         {
             Deposit = 1,
             Login,
             EXIT,
         }
 
-        public enum CustomerLoginChoice
+        public enum CustomerLoginMenu //Menus
         {
             TransferMoney = 1,
             Withdraw,
@@ -23,7 +22,7 @@ namespace BankApp.CLI
             Logout,
         }
 
-        public enum StaffLoginChoice
+        public enum StaffLoginMenu
         {
             CreateAccount = 1,
             UpdateAccount,
@@ -38,11 +37,10 @@ namespace BankApp.CLI
             Logout,
         }
 
-        public enum UpdateCustomerAccountChoice
+        public enum UpdateCustomerAccountMenu
         {
             UpdateName = 1,
             UpdatePassword,
             Back,
         }
     }
-}

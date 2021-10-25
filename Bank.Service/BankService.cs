@@ -14,7 +14,13 @@ namespace BankApp.Service
         
         private Dictionary<string, Account> customerAccounts = new Dictionary<string, Account>();
 
-        private Dictionary<string, StaffAccount> staffAccounts = new Dictionary<string, StaffAccount>(); 
+        private Dictionary<string, StaffAccount> staffAccounts = new Dictionary<string, StaffAccount>();
+
+        public void init() {
+            string bankName = "MoneyBank";
+            this.AddBank(bankName); 
+            this.CreateStaffAccount("admin", "admin");
+        }
 
 
         public bool AddBank(string Name, int sRTGS, int sIMPS, int oRTGS, int oIMPS)
