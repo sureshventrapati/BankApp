@@ -8,19 +8,18 @@ namespace BankApp.CLI
 
     class Program
     {
-        // Console.Read GetNumber Consose.Write
 
-        public static string GetString() //Console.ReadLine
+        public static string GetString() 
         {
             return Console.ReadLine();
         }
 
-        public static void print(string s) //Console.Write
+        public static void print(string s) 
         {
             Console.Write(s);
         }
 
-        public static void println(string s) //Console.WriteLine
+        public static void println(string s) 
         {
             Console.WriteLine(s);
         }
@@ -62,27 +61,19 @@ namespace BankApp.CLI
                         print(StandardMessage.AskID);
                         string ID_DEPOSIT = GetString();
                         print(StandardMessage.AskDepositAmount);
-                        
-                        //try
-                        //{
+
                         int amount = GetNumber();
                         string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT, amount);
                         Console.Clear();
                         println($"{amount}₹ have been deposited into {NAME_DEPOSIT} Account");
                         GetString();
                         break;
-                        //}
-                        //catch
-                        //{
-                        //    print(StandardMessage.InvalidAccountID);
-                        //    break;
-                        //}
+                        
 
                     case MainMenu.Login:
                         Console.Clear();
                         string ID_LOGIN, PASS_LOGIN;
-                        //try
-                        //{                            
+                        
                         println("1) Bankstaff Login\n2) Customer Login");
                         int option = GetNumber();
 
@@ -251,30 +242,15 @@ namespace BankApp.CLI
                                                 println($"{a} has been withdrawed succesfully");
                                                 GetString();
                                             }
-                                            //}
-                                            //catch
-                                            //{
-                                            //    Console.Clear();
-                                            //    println(StandardMessage.WithdrawError);
-                                            //   GetString();
-                                            //}
+
                                             break;
                                         case CustomerLoginMenu.ShowTransactions:
-                                            //try
-                                            //{
+
                                             Console.Clear();
                                             ConsoleTable t = bankService.GetTransactions(ID_LOGIN);
                                             t.Write();
                                             print("\nPress Enter to exit...");
                                             GetString();
-
-                                            //}
-                                            //catch (Exception ee)
-                                            //{
-                                            //    Console.Clear();
-                                            //    println(StandardMessage.TransactionFetchingError + ee.ToString());
-                                            //    GetString();
-                                            //}
                                             break;
                                         case CustomerLoginMenu.Logout:
                                             e = true;
@@ -289,13 +265,6 @@ namespace BankApp.CLI
                                 GetString();
                             }
                         }
-                            
-                        //}
-                        //catch
-                        //{
-                        //    Console.Clear();
-                        //    println("Enter a valid ID or Password");
-                        //}
                         break;
                     case  MainMenu.EXIT:
                         exit = true;

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace BankApp.CLI
 {
 
-        public enum MainMenu //Menus
+        public enum MainMenu
         {
             Deposit = 1,
             Login,
             EXIT,
         }
 
-        public enum CustomerLoginMenu //Menus
+        public enum CustomerLoginMenu 
         {
             TransferMoney = 1,
             Withdraw,
