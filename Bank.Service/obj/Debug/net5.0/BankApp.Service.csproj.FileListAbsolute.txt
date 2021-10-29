@@ -12,4 +12,3 @@ C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankA
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\ref\BankApp.Service.dll
 C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.pdb
-C:\Users\pc\Desktop\Techno\TASK2\VS\Bank.CLI\Bank.Service\obj\Debug\net5.0\BankApp.Service.csproj.CopyComplete
