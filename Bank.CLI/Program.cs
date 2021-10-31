@@ -272,7 +272,7 @@ namespace BankApp.CLI
                             break;
                     }
                 }
-                catch 
+                catch
                 {
                     Console.Clear();
                     println("Error Occured");
