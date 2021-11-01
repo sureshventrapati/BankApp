@@ -202,6 +202,22 @@ namespace BankApp.CLI
                                                 GetString();
                                                 break;
                                             case StaffLoginMenu.RevertTransaction:
+                                                Console.Clear();
+                                                print("Enter the TransactionID: ");
+                                                string TransactionID = Console.ReadLine();
+                                                if (bankService.RevertTransaction(TransactionID))
+                                                {
+                                                    Console.Clear();
+                                                    print("Transaction successfully reverted !!!");
+                                                    Console.ReadLine();
+                                                }
+                                                else
+                                                {
+                                                    Console.Clear();
+                                                    print("Insufficient funds...");
+                                                    Console.ReadLine();
+                                                }
+                                                
                                                 break;
                                             case StaffLoginMenu.Logout:
                                                 e = true;
@@ -223,7 +239,6 @@ namespace BankApp.CLI
                             }
                             else
                             {
-
 
                                 if (bankService.AuthenticateCustomer(ID_LOGIN, PASS_LOGIN))
                                 {

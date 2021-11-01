@@ -18,6 +18,10 @@ namespace BankApp.Service
 
         private Dictionary<string, StaffAccount> staffAccounts = new Dictionary<string, StaffAccount>();
 
+        private Dictionary<string, Transaction> transactions = new Dictionary<string, Transaction>();
+
+        private Dictionary<string, float> currency = new Dictionary<string, float>();
+
         public string init() {
             string bankName = "MoneyBank";
             string bankID = this.AddBank(bankName); 
@@ -66,6 +70,7 @@ namespace BankApp.Service
             acc.balance = acc.balance + Amount;
             string TID = acc.bankID + acc.AccountID + DateTime.Now.ToString("HHmmss");
             Transaction tr = new Transaction(TID, AccountID, Amount, "Deposit", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+            this.transactions.Add(TID, tr);
             acc.setTransaction(tr);
             return acc.Name;
         }
@@ -83,6 +88,7 @@ namespace BankApp.Service
             string TID = acc.bankID + acc.AccountID + DateTime.Now.ToString("HHmmss");
             Transaction tr = new Transaction(TID, AccountID, Amount, "Withdraw", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             acc.setTransaction(tr);
+            this.transactions.Add(TID, tr);
             return "";
         }
 
@@ -161,6 +167,8 @@ namespace BankApp.Service
             string TID_TO = acc_to.bankID + acc_to.AccountID + DateTime.Now.ToString("HHmmss");
             acc_to.setTransaction(new Transaction(TID_TO, acc_from.AccountID, acc_to.AccountID, UpdatedAmount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
 
+            this.transactions.Add(TID_FROM, new Transaction(TID_FROM,acc_from.AccountID,acc_to.AccountID,amount,"Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
+
             banks[acc_from.bankID].Profits += amount - UpdatedAmount; //EXTRA
             acc_from.balance -= amount;
             acc_to.balance += UpdatedAmount;
@@ -214,6 +222,50 @@ namespace BankApp.Service
             return bank.Profits+"";
         }
 
+        public bool RevertTransaction(string TID) // Update for deposit and withdraw
+        {
+            Transaction transaction = transactions[TID];
+            //
+            if (transaction.sID == null)
+            {
+                Account from = customerAccounts[transaction.rID];
+                if (transaction.desc == "Deposit")
+                {
+
+                    if (from.balance < transaction.amount)
+                    {
+                        return false;
+                    }
+
+                    from.balance -= transaction.amount;
+                }
+                from.transactions.Remove(from.transactions[from.transactions.FindIndex(item => item.TransactionID == TID)]);
+                return true;
+            }
+            else if(transaction.rID == null)
+            {
+                Account to = customerAccounts[transaction.sID];
+                to.balance += transaction.amount;
+                to.transactions.Remove(to.transactions[to.transactions.FindIndex(item => item.TransactionID == TID)]);
+                return true;
+
+            }
+            Account From = customerAccounts[transaction.sID];
+            Account To = customerAccounts[transaction.rID];
+
+            if (To.balance < transaction.amount)
+            {
+                return false;
+            }
+            From.balance += transaction.amount;
+            To.balance -= transaction.amount;
+
+            From.transactions.Remove(From.transactions[From.transactions.FindIndex(item => item.TransactionID == TID)]);
+            To.transactions.Remove(To.transactions[To.transactions.FindIndex(item => item.TransactionID == TID)]);
+
+            transactions.Remove(TID);
+            return true;
+        }
 
     }
 }
