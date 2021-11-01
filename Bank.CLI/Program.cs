@@ -46,7 +46,8 @@ namespace BankApp.CLI
             bool exit = false;
 
             BankService bankService = new BankService();
-            bankService.init();
+            println(bankService.init());
+            Console.ReadLine();
 
             while (!exit)
             {
@@ -58,7 +59,7 @@ namespace BankApp.CLI
                     {
                         case MainMenu.Deposit:
                             Console.Clear();
-                            print(StandardMessage.AskID);
+                            print(StandardMessage.AskAccountID);
                             string ID_DEPOSIT = GetString();
                             print(StandardMessage.AskDepositAmount);
 
@@ -74,11 +75,11 @@ namespace BankApp.CLI
                             Console.Clear();
                             string ID_LOGIN, PASS_LOGIN;
 
-                            println("1) Bankstaff Login\n2) Customer Login");
+                            print("1) Bankstaff Login\n2) Customer Login\n\nEnter Your Choice: ");
                             int option = GetNumber();
 
                             Console.Clear();
-                            print(StandardMessage.AskID);
+                            print(StandardMessage.AskAccountID);
                             ID_LOGIN = GetString();
 
                             print(StandardMessage.AskPassword);
@@ -117,7 +118,7 @@ namespace BankApp.CLI
                                                 {
                                                     case UpdateCustomerAccountMenu.UpdateName:
                                                         Console.Clear();
-                                                        print(StandardMessage.AskID);
+                                                        print(StandardMessage.AskAccountID);
                                                         string CustomerAccountID = GetString();
                                                         print(StandardMessage.AskName);
                                                         string NewName = GetString();
@@ -127,7 +128,7 @@ namespace BankApp.CLI
                                                         break;
                                                     case UpdateCustomerAccountMenu.UpdatePassword:
                                                         Console.Clear();
-                                                        print(StandardMessage.AskID);
+                                                        print(StandardMessage.AskAccountID);
                                                         string CustomerID = GetString();
                                                         print(StandardMessage.AskPassword);
                                                         string NewPassword = GetString();
@@ -142,7 +143,7 @@ namespace BankApp.CLI
                                                 break;
                                             case StaffLoginMenu.DeleteAccount:
                                                 Console.Clear();
-                                                print(StandardMessage.AskID);
+                                                print(StandardMessage.AskAccountID);
                                                 string CustomerAccID = GetString();
                                                 if (bankService.DeleteCustomerAccount(CustomerAccID))
                                                 {
@@ -156,16 +157,44 @@ namespace BankApp.CLI
                                             case StaffLoginMenu.AddCurrency:
                                                 break;
                                             case StaffLoginMenu.UpdatesRTGS:
+                                                print("Enter Bank ID:");
+                                                string bankID = GetString();
+                                                print("Enter New sRTGS value: ");
+                                                int NewsRTGS = GetNumber();
+                                                int temp = bankService.UpdatesRTGS(NewsRTGS,bankID);
+                                                print($"sRTGS updated to {temp}");
+                                                Console.ReadLine();
                                                 break;
                                             case StaffLoginMenu.UpdatesIMPS:
+                                                print("Enter Bank ID:");
+                                                bankID = GetString();
+                                                print("Enter New sRTGS value: ");
+                                                int NewsIMPS = GetNumber();
+                                                temp = bankService.UpdatesRTGS(NewsIMPS, bankID);
+                                                print($"sRTGS updated to {temp}");
+                                                Console.ReadLine();
                                                 break;
                                             case StaffLoginMenu.UpdateoRTGS:
+                                                print("Enter Bank ID:");
+                                                bankID = GetString();
+                                                print("Enter New sRTGS value: ");
+                                                int NewoRTGS = GetNumber();
+                                                temp = bankService.UpdatesRTGS(NewoRTGS, bankID);
+                                                print($"sRTGS updated to {temp}");
+                                                Console.ReadLine();
                                                 break;
                                             case StaffLoginMenu.UpdateoIMPS:
+                                                print("Enter Bank ID:");
+                                                bankID = GetString();
+                                                print("Enter New sRTGS value: ");
+                                                int NewoIMPS = GetNumber();
+                                                temp = bankService.UpdatesRTGS(NewoIMPS, bankID);
+                                                print($"sRTGS updated to {temp}");
+                                                Console.ReadLine();
                                                 break;
                                             case StaffLoginMenu.ViewAccountTransaction:
                                                 Console.Clear();
-                                                print(StandardMessage.AskID);
+                                                print(StandardMessage.AskAccountID);
                                                 string ID = GetString();
                                                 ConsoleTable ctable = bankService.GetTransactions(ID);
                                                 ctable.Write();
@@ -176,6 +205,12 @@ namespace BankApp.CLI
                                                 break;
                                             case StaffLoginMenu.Logout:
                                                 e = true;
+                                                break;
+                                            case StaffLoginMenu.ShowBankProfits:
+                                                print("Enter BankID: ");
+                                                bankID = GetString();
+                                                print(bankService.ShowBankProfits(bankID));
+                                                Console.ReadLine();
                                                 break;
                                         }
                                     }
@@ -197,7 +232,7 @@ namespace BankApp.CLI
                                     {
                                         Console.Clear();
                                         string NAME_LOGIN = bankService.getName(ID_LOGIN);
-                                        int balance = bankService.getBalance(ID_LOGIN);
+                                        float balance = bankService.getBalance(ID_LOGIN);
                                         println($"Welcome {NAME_LOGIN}");
                                         println($"Your account balance is {balance}₹");
 
@@ -246,7 +281,6 @@ namespace BankApp.CLI
 
                                                 break;
                                             case CustomerLoginMenu.ShowTransactions:
-
                                                 Console.Clear();
                                                 ConsoleTable t = bankService.GetTransactions(ID_LOGIN);
                                                 t.Write();

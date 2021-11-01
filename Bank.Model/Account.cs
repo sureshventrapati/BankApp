@@ -13,7 +13,7 @@ namespace BankApp.Model
         public string bankID { get; set; }
 
         public string AccountID { get; set; }
-        public int balance { get; set; }
+        public float balance { get; set; }
         public string Name { get; set; }
         public string Passowrd { get; set; }
 

@@ -11,37 +11,41 @@ namespace BankApp.Service
     public class BankService
     {
         private Dictionary<string, Bank> banks = new Dictionary<string, Bank>();
+
+        string BankID;
         
         private Dictionary<string, Account> customerAccounts = new Dictionary<string, Account>();
 
         private Dictionary<string, StaffAccount> staffAccounts = new Dictionary<string, StaffAccount>();
 
-        public void init() {
+        public string init() {
             string bankName = "MoneyBank";
-            this.AddBank(bankName); 
+            string bankID = this.AddBank(bankName); 
             this.CreateStaffAccount("admin", "admin");
+            return bankID;
         }
 
 
-        public bool AddBank(string Name, int sRTGS, int sIMPS, int oRTGS, int oIMPS)
+        public string AddBank(string Name, int sRTGS, int sIMPS, int oRTGS, int oIMPS)
         {
             Bank bank = new Bank(Name, sRTGS, sIMPS, oRTGS, oIMPS);
-            this.banks.Add(bank.ID,bank);
-            return true;
+            this.banks.Add(bank.ID, bank);
+            return bank.ID;
         }
 
-        public bool AddBank(string Name)
+        public string AddBank(string Name)
         {
             Bank bank = new Bank(Name);
             this.banks.Add(bank.ID, bank);
-            return true;
+            this.BankID = bank.ID;
+            return bank.ID;
         }
 
         public string CreateCustomerAccount(string Name, string pass)
         {
             Account acc = new Account(Name);
             acc.Passowrd = pass;
-            acc.bankID = "Mon19102021";
+            acc.bankID = banks[this.BankID].ID;
             string AccountID = acc.AccountID;
             customerAccounts.Add(AccountID,acc);
             return AccountID;
@@ -69,7 +73,7 @@ namespace BankApp.Service
         public string WithdrawAmount(string AccountID, int Amount)
         {
             Account acc = customerAccounts[AccountID];
-            int bal = acc.balance;
+            float bal = acc.balance;
             if (bal < Amount)
             {
                 return "Failed";
@@ -126,13 +130,14 @@ namespace BankApp.Service
             return customerAccounts[AccountID].Name;
         }
 
-        public int getBalance(string AccountID)
+        public float getBalance(string AccountID)
         {
             return customerAccounts[AccountID].balance;
         }
 
         public bool TransferAmount(string ID_FROM, string ID_TO, int amount)
         {
+            float UpdatedAmount;
             Account acc_from = customerAccounts[ID_FROM];
             Account acc_to = customerAccounts[ID_TO];
 
@@ -140,16 +145,25 @@ namespace BankApp.Service
             {
                 return false;
             }
+            if(acc_from.bankID == acc_to.bankID)
+            {
+                float temp = amount * (banks[acc_from.bankID].sRTGSCharge / 100);
+                UpdatedAmount = amount - temp;
+            }
+            else
+            {
+                float temp = amount * (banks[acc_from.bankID].oRTGSCharge / 100);
+                UpdatedAmount = amount - temp;
+            }
 
             string TID_FROM = acc_from.bankID + acc_from.AccountID + DateTime.Now.ToString("HHmmss");
-            Transaction tr = new Transaction(TID_FROM,acc_from.AccountID,acc_to.AccountID,amount,"Transfer",DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-            acc_from.setTransaction(tr);
+            acc_from.setTransaction(new Transaction(TID_FROM, acc_from.AccountID, acc_to.AccountID, amount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
             string TID_TO = acc_to.bankID + acc_to.AccountID + DateTime.Now.ToString("HHmmss");
-            Transaction trr = new Transaction(TID_TO,acc_from.AccountID, acc_to.AccountID, amount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
-            acc_to.setTransaction(trr);
+            acc_to.setTransaction(new Transaction(TID_TO, acc_from.AccountID, acc_to.AccountID, UpdatedAmount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
 
+            banks[acc_from.bankID].Profits += amount - UpdatedAmount; //EXTRA
             acc_from.balance -= amount;
-            acc_to.balance += amount;
+            acc_to.balance += UpdatedAmount;
 
             return true;
         }
@@ -158,12 +172,46 @@ namespace BankApp.Service
         {
             Account acc = customerAccounts[AccountID];
             List<Transaction> transactions = acc.getTransactions();
-            ConsoleTable table = new ConsoleTable(new ConsoleTableOptions { Columns = new[] { "TransactionID", "SendersAccountID", "RecieversAccountID", "Type", "Amount", "Time" }, EnableCount = false });
+            ConsoleTable table = new ConsoleTable(new ConsoleTableOptions { Columns = new[] { "SNO","TransactionID", "SendersAccountID", "RecieversAccountID", "Type", "Amount", "Time" }, EnableCount = false });
             foreach(Transaction transaction in transactions)
             {
-                table.AddRow(transaction.TransactionID, transaction.sID, transaction.rID, transaction.desc, transaction.amount, transaction.time);
+                table.AddRow(transaction.SNO, transaction.TransactionID, transaction.sID, transaction.rID, transaction.desc, transaction.amount, transaction.time);
             }
             return table;
+        }
+
+        public int UpdatesRTGS(int val, string bankID)
+        {
+            Bank bank = banks[bankID];
+            bank.sRTGSCharge = val;
+            return val;
+        }
+
+        public int UpdatesIMPS(int val, string bankID)
+        {
+            Bank bank = banks[bankID];
+            bank.sRTGSCharge = val;
+            return val;
+        }
+
+        public int UpdateoRTGS(int val, string bankID)
+        {
+            Bank bank = banks[bankID];
+            bank.sRTGSCharge = val;
+            return val;
+        }
+
+        public int UpdateoIMPS(int val, string bankID)
+        {
+            Bank bank = banks[bankID];
+            bank.sRTGSCharge = val;
+            return val;
+        }
+
+        public string ShowBankProfits(string bankID)
+        {
+            Bank bank = banks[bankID];
+            return bank.Profits+"";
         }
 
 

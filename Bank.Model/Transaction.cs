@@ -8,6 +8,8 @@ namespace BankApp.Model
 {
     public class Transaction
     {
+        public static int Total { get; set; }
+        public int SNO { get; set; }
         public string TransactionID { get; set; }
         public string sID { get; set; }
         public string rID { get; set; }
@@ -23,6 +25,8 @@ namespace BankApp.Model
             this.amount = amount;
             this.desc = desc;
             this.time = time;
+            Total += 1;
+            this.SNO = Total;
         }
         public Transaction(string TID, string rID, double amount, string desc, string time)
         {
@@ -31,6 +35,8 @@ namespace BankApp.Model
             this.amount = amount;
             this.desc = desc;
             this.time = time;
+            Total += 1;
+            this.SNO = Total;
         }
     }
 }

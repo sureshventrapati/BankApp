@@ -11,7 +11,7 @@ namespace BankApp.CLI
         public static string WelcomeMenu = "Choose an option...\n1) Deposit Amount\n2) Login\n3) EXIT\n\nEnter your choice: ";
         
 
-        public static string StaffLoginMenu = "Choose an action...\n1) CreateAccount\n2) UpdateAccount\n3) DeleteAccount\n4) AddCurrency\n5) UpdatesRTGS\n6) UpdatesIMPS\n7) UpdateoRTGS\n8) UpdateoIMPS\n9) ViewAccountTransaction\n10) RevertTransaction\n11) Logout\n\nEnter your choice: ";
+        public static string StaffLoginMenu = "Choose an action...\n1) Create Account\n2) Update Account\n3) Delete Account\n4) Add Currency\n5) Update sRTGS\n6) Update sIMPS\n7) Update oRTGS\n8) Update oIMPS\n9) View Account Transaction\n10) Revert Transaction\n11) Logout\n12) Show Bank Profits\n\nEnter your choice: ";
 
 
         public static string UpdateCustomerAccount = "Choose an action...\n1) Update Name\n2) Update Password\n3) Back\n\nEnter your choice: ";
@@ -23,7 +23,7 @@ namespace BankApp.CLI
         public static string AskPassword = "Enter Password: ";
         
 
-        public static string AskID = "Enter the AccountID : ";
+        public static string AskAccountID = "Enter the AccountID : ";
         
 
         public static string AskDepositAmount = "Enter the amount to be deposited: ";

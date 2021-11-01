@@ -8,19 +8,20 @@ namespace BankApp.Model
 {
     public class Bank
     {
+        public float Profits { get; set; } //EXTRA
         public string ID { get; set; }
         public string Name { get; set; }
 
-        public int sRTGSCharge { get; set; }
+        public float sRTGSCharge { get; set; }
 
-        public int sIMPSCharge { get; set; }
+        public float sIMPSCharge { get; set; }
 
-        public int oRTGSCharge { get; set; }
+        public float oRTGSCharge { get; set; }
 
-        public int oIMPSCharge { get; set; }
+        public float oIMPSCharge { get; set; }
 
 
-        public Bank(string bankName,int sRTGS, int sIMPS, int oRTGS, int oIMPS)
+        public Bank(string bankName,float sRTGS, float sIMPS, float oRTGS, float oIMPS)
         {
             this.Name = bankName;
             this.ID = bankName.Substring(0, 3) + DateTime.Now.ToString("ddMMyyyy");

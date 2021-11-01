@@ -35,6 +35,7 @@ namespace BankApp.CLI
             ViewAccountTransaction,
             RevertTransaction,
             Logout,
+            ShowBankProfits,
         }
 
         public enum UpdateCustomerAccountMenu
