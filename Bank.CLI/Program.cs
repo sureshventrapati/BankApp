@@ -61,10 +61,14 @@ namespace BankApp.CLI
                             Console.Clear();
                             print(StandardMessage.AskAccountID);
                             string ID_DEPOSIT = GetString();
+
+                            print("Enter the first 3 letter if the currency: ");
+                            string currency = GetString();
+
                             print(StandardMessage.AskDepositAmount);
 
                             int amount = GetNumber();
-                            string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT, amount);
+                            string NAME_DEPOSIT = bankService.DepositAmount(ID_DEPOSIT, amount, currency);
                             Console.Clear();
                             println($"{amount}₹ have been deposited into {NAME_DEPOSIT} Account");
                             GetString();
@@ -155,6 +159,12 @@ namespace BankApp.CLI
                                                 }
                                                 break;
                                             case StaffLoginMenu.AddCurrency:
+                                                Console.Clear();
+                                                print("Enter 3 letter name of the new currency: ");
+                                                string currencyName = GetString();
+                                                print($"Enter the number of rupees per one {currencyName}: ");
+                                                float rate = GetNumber();
+                                                bankService.AddCurrency(currencyName,rate);
                                                 break;
                                             case StaffLoginMenu.UpdatesRTGS:
                                                 print("Enter Bank ID:");

@@ -26,6 +26,7 @@ namespace BankApp.Service
             string bankName = "MoneyBank";
             string bankID = this.AddBank(bankName); 
             this.CreateStaffAccount("admin", "admin");
+            this.currency.Add("INR",1);
             return bankID;
         }
 
@@ -64,10 +65,10 @@ namespace BankApp.Service
             return "admin";
         }
 
-        public string DepositAmount(string AccountID,int Amount)
+        public string DepositAmount(string AccountID,int Amount, string currencyName)
         {
             Account acc = customerAccounts[AccountID];
-            acc.balance = acc.balance + Amount;
+            acc.balance = acc.balance + Amount*(currency[currencyName]);
             string TID = acc.bankID + acc.AccountID + DateTime.Now.ToString("HHmmss");
             Transaction tr = new Transaction(TID, AccountID, Amount, "Deposit", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             this.transactions.Add(TID, tr);
@@ -264,6 +265,12 @@ namespace BankApp.Service
             To.transactions.Remove(To.transactions[To.transactions.FindIndex(item => item.TransactionID == TID)]);
 
             transactions.Remove(TID);
+            return true;
+        }
+
+        public bool AddCurrency(string name, float value)
+        {
+            currency.Add(name,value);
             return true;
         }
 
