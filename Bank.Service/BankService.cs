@@ -96,7 +96,7 @@ namespace BankApp.Service
         public bool AuthenticateCustomer(string AccountID,string pass)
         {
             Account acc = customerAccounts[AccountID];
-            if (acc.Passowrd == pass)
+            if (acc.Passowrd == pass) // direct return
             {
                 return true;
             }
@@ -106,7 +106,7 @@ namespace BankApp.Service
         public bool AuthenticateStaff(string AccountID, string pass)
         {
             StaffAccount acc = staffAccounts[AccountID];
-            if (acc.Passowrd == pass)
+            if (acc.Passowrd == pass) // direct return
             {
                 return true;
             }
@@ -168,7 +168,7 @@ namespace BankApp.Service
             string TID_TO = acc_to.bankID + acc_to.AccountID + DateTime.Now.ToString("HHmmss");
             acc_to.setTransaction(new Transaction(TID_TO, acc_from.AccountID, acc_to.AccountID, UpdatedAmount, "Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
 
-            this.transactions.Add(TID_FROM, new Transaction(TID_FROM,acc_from.AccountID,acc_to.AccountID,amount,"Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")));
+            this.transactions.Add(TID_FROM, new Transaction(TID_FROM,acc_from.AccountID,acc_to.AccountID,amount,"Transfer", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))); // create a function for DateTime.Now
 
             banks[acc_from.bankID].Profits += amount - UpdatedAmount; //EXTRA
             acc_from.balance -= amount;
@@ -217,10 +217,10 @@ namespace BankApp.Service
             return val;
         }
 
-        public string ShowBankProfits(string bankID)
+        public string ShowBankProfits(string bankID) //Return float or double 
         {
             Bank bank = banks[bankID];
-            return bank.Profits+"";
+            return bank.Profits+""; // .toString
         }
 
         public bool RevertTransaction(string TID) // Update for deposit and withdraw
