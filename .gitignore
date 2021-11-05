@@ -4,7 +4,7 @@
 
 /Bank.CLI/bin
 /Bank.Model/bin
-/.vs/Bank.CLI/v16
+/.vs
 /Bank.Service/bin
 
 /Bank.CLI/obj
