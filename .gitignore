@@ -10,3 +10,4 @@
 /Bank.CLI/obj
 /Bank.Model/obj
 /Bank.Service/obj
+*.v2
