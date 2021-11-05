@@ -2,4 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/Bank.CLI/bin/Debug/net5.0
+/Bank.CLI/bin
+/Bank.Model/bin
+/.vs/Bank.CLI/v16
+/Bank.Service/bin
+
+/Bank.CLI/obj
+/Bank.Model/obj
+/Bank.Service/obj
